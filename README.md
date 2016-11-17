@@ -7,7 +7,7 @@ The Movies app is a demonstration of basic concepts, such as fetching data, rend
 <table>
   <tr>
     <td align="center"><img src="https://github.com/realdubb/react-native-tmdb-movies/blob/master/screenshots/HomeScreen.png" width="250"/><br/>Main Screen</td>
-    <td align="center"><img src="https://github.com/realdubb/react-native-tmdb-movies/blob/master/screenshots/MovieDetail.png.png" width="250"/><br/>Detail view</td>
+    <td align="center"><img src="https://github.com/realdubb/react-native-tmdb-movies/blob/master/screenshots/MovieDetail.png" width="250"/><br/>Detail view</td>
   </tr>
    <tr>
     <td align="center"><img src="https://github.com/realdubb/react-native-tmdb-movies/blob/master/screenshots/SearchingDisplay.png" width="250"/><br/>Searching</td>
