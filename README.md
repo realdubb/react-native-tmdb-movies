@@ -27,7 +27,7 @@ Complete the following steps to build and run the app:
 1. Clone this repository:
 
   ~~~
-  $ git clone https://github.com/realdubb/rnMovies.git
+  $ git clone https://github.com/realdubb/react-native-tmdb-movies.git
   ~~~
 
 2. Enter the `rnMovies` directory:
