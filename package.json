@@ -1,5 +1,6 @@
 {
-  "name": "rnMovies",
+  "name": "react-native-tmdb-movies",
+  "description": "Reach Native original example modified to work with TMDb to show movies showing in theaters and allow for searching of all movies.",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -19,5 +20,18 @@
     "jest": "17.0.2",
     "jest-react-native": "17.0.2",
     "react-test-renderer": "15.3.2"
-  }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/realdubb/react-native-tmdb-movies.git"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "BSD",
+      "url": "https://raw.githubusercontent.com/realdubb/react-native-tmdb-movies/master/LICENSE"
+    }
+  ],
+  "homepage": "https://github.com/realdubb/react-native-tmdb-movies"
 }
