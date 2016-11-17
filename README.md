@@ -21,6 +21,7 @@ The Movies app is a demonstration of basic concepts, such as fetching data, rend
 
 You need to have your machine setup for [React Native Development](https://facebook.github.io/react-native/docs/getting-started.html) and API key from [TMDB The Movie Database](https://www.themoviedb.org/faq/api?language=en)
 
+
 Complete the following steps to build and run the app:
 
 1. Clone this repository:
@@ -53,3 +54,16 @@ Complete the following steps to build and run the app:
   ~~~
   $ react-native run-android
   ~~~
+
+
+#### Tested with:
+
+ox mavericks
+
+react-native-cli: 1.0.0
+react-native: 0.37.0
+
+node v6.2.1
+npm 3.10.8
+
+ios 10.1 & xcode 8
