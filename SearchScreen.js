@@ -25,6 +25,8 @@ var {
   Text,
   View,
 } = ReactNative;
+
+
 var TimerMixin = require('react-timer-mixin');
 
 var invariant = require('fbjs/lib/invariant');
@@ -35,15 +37,11 @@ var MovieScreen = require('./MovieScreen');
 var SearchBar = require('SearchBar');
 
 /**
- * This is for demo purposes only, and rate limited.
- * In case you want to use the Rotten Tomatoes' API on a real app you should
- * create an account at http://developer.rottentomatoes.com/
+ * Using tmDB - get your own key
  */
-var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/';
-var API_KEYS = [
-  '7waqfqbprs7pajbz28mqf6vz',
-  // 'y4vwv8m33hed9ety83jmv52f', Fallback api_key
-];
+var API_URL = 'https://api.themoviedb.org/3/';
+var API_KEY = require('./ApiKey');
+
 
 // Results should be cached keyed by the query
 // with values of null meaning "being fetched"
@@ -77,19 +75,16 @@ var SearchScreen = React.createClass({
   componentDidMount: function() {
     this.searchMovies('');
   },
-
   _urlForQueryAndPage: function(query: string, pageNumber: number): string {
-    var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     if (query) {
       return (
-        API_URL + 'movies.json?apikey=' + apiKey + '&q=' +
-        encodeURIComponent(query) + '&page_limit=20&page=' + pageNumber
+        API_URL + 'search/movie?api_key=' + API_KEY + '&query=' +
+        encodeURIComponent(query) + '&page=' + pageNumber
       );
     } else {
       // With no query, load latest movies
       return (
-        API_URL + 'lists/movies/in_theaters.json?apikey=' + apiKey +
-        '&page_limit=20&page=' + pageNumber
+        API_URL + 'movie/now_playing?api_key=' + API_KEY + '&language=en-US' + '&page=' + pageNumber
       );
     }
   },
@@ -133,9 +128,12 @@ var SearchScreen = React.createClass({
       })
       .then((responseData) => {
         LOADING[query] = false;
-        resultsCache.totalForQuery[query] = responseData.total;
-        resultsCache.dataForQuery[query] = responseData.movies;
-        resultsCache.nextPageNumberForQuery[query] = 2;
+        resultsCache.totalForQuery[query] = responseData.total_results;
+        resultsCache.dataForQuery[query] = responseData.results;
+        resultsCache.nextPageNumberForQuery[query] = 1;
+
+        if(responseData.total_pages > 1)
+          resultsCache.nextPageNumberForQuery[query]++
 
         if (this.state.filter !== query) {
           // do not update state if the query is stale
@@ -144,7 +142,7 @@ var SearchScreen = React.createClass({
 
         this.setState({
           isLoading: false,
-          dataSource: this.getDataSource(responseData.movies),
+          dataSource: this.getDataSource(responseData.results),
         });
       })
       .done();
@@ -183,7 +181,6 @@ var SearchScreen = React.createClass({
     fetch(this._urlForQueryAndPage(query, page))
       .then((response) => response.json())
       .catch((error) => {
-        console.error(error);
         LOADING[query] = false;
         this.setState({
           isLoadingTail: false,
@@ -194,11 +191,11 @@ var SearchScreen = React.createClass({
 
         LOADING[query] = false;
         // We reached the end of the list before the expected number of results
-        if (!responseData.movies) {
+        if (!responseData.results) {
           resultsCache.totalForQuery[query] = moviesForQuery.length;
         } else {
-          for (var i in responseData.movies) {
-            moviesForQuery.push(responseData.movies[i]);
+          for (var i in responseData.results) {
+            moviesForQuery.push(responseData.results[i]);
           }
           resultsCache.dataForQuery[query] = moviesForQuery;
           resultsCache.nextPageNumberForQuery[query] += 1;
@@ -224,14 +221,14 @@ var SearchScreen = React.createClass({
   selectMovie: function(movie: Object) {
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: movie.title,
+        title: movie.original_title,
         component: MovieScreen,
         passProps: {movie},
       });
     } else {
       dismissKeyboard();
       this.props.navigator.push({
-        title: movie.title,
+        title: movie.original_title,
         name: 'movie',
         movie: movie,
       });

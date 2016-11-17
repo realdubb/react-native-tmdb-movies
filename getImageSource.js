@@ -15,11 +15,10 @@
  */
 'use strict';
 
+var IMG_URL = 'https://image.tmdb.org/t/p/w300';
+
 function getImageSource(movie: Object, kind: ?string): {uri: ?string} {
-  var uri = movie && movie.posters ? movie.posters.thumbnail : null;
-  if (uri && kind) {
-    uri = uri.replace('tmb', kind);
-  }
+  var uri = IMG_URL + movie.poster_path;
   return { uri };
 }
 

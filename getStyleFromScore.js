@@ -29,6 +29,8 @@ function getStyleFromScore(score: number): StyleObj {
     return styles.noScore;
   }
 
+  score *= 10;
+
   var normalizedScore = Math.round((score / 100) * MAX_VALUE);
   return {
     color: 'rgb(' +

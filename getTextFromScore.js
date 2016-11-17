@@ -16,7 +16,7 @@
 'use strict';
 
 function getTextFromScore(score: number): string {
-  return score > 0 ? score + '%' : 'N/A';
+  return score > 0 ? score + '/10' : 'N/A';
 }
 
 module.exports = getTextFromScore;

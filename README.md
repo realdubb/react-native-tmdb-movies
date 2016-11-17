@@ -1,57 +1,55 @@
 # Movies app
 
+_** Modified from react-native repo to utilize tMDb api for movies since rottentomatoes api is not widely accessible_
+
 The Movies app is a demonstration of basic concepts, such as fetching data, rendering a list of data including images, and navigating between different screens.
 
-## Running this app
+<table>
+  <tr>
+    <td align="center"><img src="https://github.com/realdubb/rnMovies/blob/master/screenshots/HomeScreen.png" width="250"/><br/>Main Screen</td>
+    <td align="center"><img src="https://github.com/realdubb/rnMovies/blob/master/screenshots/MovieDetail.png.png" width="250"/><br/>Detail view</td>
+  </tr>
+   <tr>
+    <td align="center"><img src="https://github.com/realdubb/rnMovies/blob/master/screenshots/SearchingDisplay.png" width="250"/><br/>Searching</td>
+    <td align="center"></td>
+  </tr>
+  
+</table>
 
-Before running the app, make sure you ran:
 
-    git clone https://github.com/facebook/react-native.git
-    cd react-native
-    npm install
+## How to build and run it yourself
 
-### Running on iOS
+You need to have your machine setup for [React Native Development](https://facebook.github.io/react-native/docs/getting-started.html) and API key from [TMDB The Movie Database](https://www.themoviedb.org/faq/api?language=en)
 
-Mac OS and Xcode are required.
+Complete the following steps to build and run the app:
 
-- Open `Examples/Movies/Movies.xcodeproj` in Xcode
-- Hit the Run button
+1. Clone this repository:
 
-See [Running on device](https://facebook.github.io/react-native/docs/running-on-device.html) if you want to use a physical device.
+  ~~~
+  $ git clone https://github.com/realdubb/rnMovies.git
+  ~~~
 
-### Running on Android
+2. Enter the `rnMovies` directory:
 
-You'll need to have all the [prerequisites](https://github.com/facebook/react-native/tree/master/ReactAndroid#prerequisites) (SDK, NDK) for Building React Native installed.
+  ~~~
+  $ cd rnMovies
+  ~~~
 
-Start an Android emulator ([Genymotion](https://www.genymotion.com) is recommended).
+3. Install dependencies:
 
-    cd react-native
-    ./gradlew :Examples:Movies:android:app:installDebug
-    ./packager/packager.sh
+  ~~~
+  $ npm install
+  ~~~
 
-_Note: Building for the first time can take a while._
 
-Open the Movies app in your emulator.
+4. Build and run for iOS
 
-See [Running on Device](https://facebook.github.io/react-native/docs/running-on-device.html) in case you want to use a physical device.
+  ~~~
+  $ react-native run-ios
+  ~~~
 
-### Running with Buck
-
-Follow the same setup as running with gradle.
-
-Install Buck from [here](https://buckbuild.com/setup/install.html).
-
-Run the following commands from the react-native folder:
-
-    ./gradlew :ReactAndroid:packageReactNdkLibsForBuck
-    buck fetch movies
-    buck install -r movies
-    ./packager/packager.sh
-
-_Note: The native libs are still built using gradle. Full build with buck is coming soon(tm)._
-
-## Built from source
-
-Building the app on both iOS and Android means building the React Native framework from source. This way you're running the latest native and JS code the way you see it in your clone of the github repo.
-
-This is different from apps created using `react-native init` which have a dependency on a specific version of React Native JS and native code, declared in a `package.json` file (and `build.gradle` for Android apps).
+5. Build and run for Android
+  
+  ~~~
+  $ react-native run-android
+  ~~~

@@ -1,31 +1,66 @@
-include_defs('//ReactAndroid/DEFS')
+import re
 
-android_binary(
-  name = 'app',
-  manifest = 'src/main/AndroidManifest.xml',
-  keystore = '//keystores:debug',
-  deps = [
-    ':movies-lib',
-  ],
+# To learn about Buck see [Docs](https://buckbuild.com/).
+# To run your application with Buck:
+# - install Buck
+# - `npm start` - to start the packager
+# - `cd android`
+# - `keytool -genkey -v -keystore keystores/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname "CN=Android Debug,O=Android,C=US"`
+# - `./gradlew :app:copyDownloadableDepsToLibs` - make all Gradle compile dependencies available to Buck
+# - `buck install -r android/app` - compile, install and run application
+#
+
+lib_deps = []
+for jarfile in glob(['libs/*.jar']):
+  name = 'jars__' + re.sub(r'^.*/([^/]+)\.jar$', r'\1', jarfile)
+  lib_deps.append(':' + name)
+  prebuilt_jar(
+    name = name,
+    binary_jar = jarfile,
+  )
+
+for aarfile in glob(['libs/*.aar']):
+  name = 'aars__' + re.sub(r'^.*/([^/]+)\.aar$', r'\1', aarfile)
+  lib_deps.append(':' + name)
+  android_prebuilt_aar(
+    name = name,
+    aar = aarfile,
+  )
+
+android_library(
+  name = 'all-libs',
+  exported_deps = lib_deps
 )
 
 android_library(
-  name = 'movies-lib',
-  srcs = glob(['src/main/java/**/*.java']),
+  name = 'app-code',
+  srcs = glob([
+    'src/main/java/**/*.java',
+  ]),
   deps = [
+    ':all-libs',
+    ':build_config',
     ':res',
-    react_native_dep('third-party/java/jsr-305:jsr-305'),
-    react_native_target('java/com/facebook/react/modules/core:core'),
-    react_native_target('java/com/facebook/react/shell:shell'),
-    react_native_target('java/com/facebook/react:react'),
-    react_native_target('jni/prebuilt:android-jsc'),
-    # .so files are prebuilt by Gradle with `./gradlew :ReactAndroid:packageReactNdkLibsForBuck`
-    react_native_target('jni/prebuilt:reactnative-libs'),
   ],
+)
+
+android_build_config(
+  name = 'build_config',
+  package = 'com.rnmovies',
 )
 
 android_resource(
   name = 'res',
   res = 'src/main/res',
-  package = 'com.facebook.react.movies',
+  package = 'com.rnmovies',
+)
+
+android_binary(
+  name = 'app',
+  package_type = 'debug',
+  manifest = 'src/main/AndroidManifest.xml',
+  keystore = '//android/keystores:debug',
+  deps = [
+    ':app-code',
+  ],
 )

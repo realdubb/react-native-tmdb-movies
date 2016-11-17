@@ -33,7 +33,7 @@ var getTextFromScore = require('./getTextFromScore');
 
 class MovieCell extends React.Component {
   render() {
-    var criticsScore = this.props.movie.ratings.critics_score;
+    var criticsScore = this.props.movie.vote_average;
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -46,18 +46,18 @@ class MovieCell extends React.Component {
           onHideUnderlay={this.props.onUnhighlight}>
           <View style={styles.row}>
             <Image
-              source={getImageSource(this.props.movie, 'det')}
+              source={getImageSource(this.props.movie)}
               style={styles.cellImage}
             />
             <View style={styles.textContainer}>
               <Text style={styles.movieTitle} numberOfLines={2}>
-                {this.props.movie.title}
+                {this.props.movie.original_title}
               </Text>
               <Text style={styles.movieYear} numberOfLines={1}>
-                {this.props.movie.year}
+                {this.props.movie.release_date}
                 {' '}&bull;{' '}
                 <Text style={getStyleFromScore(criticsScore)}>
-                  Critics {getTextFromScore(criticsScore)}
+                  Rating {getTextFromScore(criticsScore)}
                 </Text>
               </Text>
             </View>

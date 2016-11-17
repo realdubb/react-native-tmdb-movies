@@ -39,19 +39,19 @@ class MovieScreen extends React.Component {
             style={styles.detailsImage}
           />
           <View style={styles.rightPane}>
-            <Text style={styles.movieTitle}>{this.props.movie.title}</Text>
-            <Text>{this.props.movie.year}</Text>
+            <Text style={styles.movieTitle}>{this.props.movie.original_title}</Text>
+            <Text>{this.props.movie.release_date}</Text>
             <View style={styles.mpaaWrapper}>
               <Text style={styles.mpaaText}>
-                {this.props.movie.mpaa_rating}
+                NR
               </Text>
             </View>
-            <Ratings ratings={this.props.movie.ratings} />
+            <Ratings ratings={this.props.movie.vote_average} />
           </View>
         </View>
         <View style={styles.separator} />
         <Text>
-          {this.props.movie.synopsis}
+          {this.props.movie.overview}
         </Text>
         <View style={styles.separator} />
         <Cast actors={this.props.movie.abridged_cast} />
@@ -62,8 +62,8 @@ class MovieScreen extends React.Component {
 
 class Ratings extends React.Component {
   render() {
-    var criticsScore = this.props.ratings.critics_score;
-    var audienceScore = this.props.ratings.audience_score;
+    var criticsScore = this.props.ratings;
+    var audienceScore = this.props.ratings;
 
     return (
       <View>
